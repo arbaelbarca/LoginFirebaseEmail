@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#607D8B</color>
+    <color name="colorPrimaryDark">#455A64</color>
+    <color name="colorAccent">#016DA8</color>
+
+    <color name="text_color_black">#323232</color>
+    <color name="black_pekat">#000000</color>
+    <color name="text_color_white">#FFFFFF</color>
+
+    <color name="text_color_grey">#999999</color>
+    <color name="text_color_green">#006766</color>
+    <color name="red_actionbar_normal">#f02a21</color>
+
+    <!-- This Home -->
+
+    <!-- This Article -->
+
+    <!-- This View Detail -->
+
+    <!-- This Profile -->
+
+    <!-- This Activity Log -->
+
+    <!-- Try Primary Concept -->
+
+    <!-- This for header action bar -->
+
+    <!-- This for navigation drawer -->
+
+    <!-- This for activity detail -->
+
+    <!-- This color for button -->
+
+    <!-- This color for weather -->
+
+    <!-- This color for style -->
+
+    <!-- This color for product detail -->
+
+    <!-- This color for default app -->
+
+
+    <color name="color_background_grey">#757575</color>
+
+
+</resources>
