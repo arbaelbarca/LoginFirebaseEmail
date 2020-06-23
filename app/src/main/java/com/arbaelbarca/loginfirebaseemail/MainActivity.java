@@ -19,6 +19,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -60,7 +61,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.btnWisata)
     Button btnWisata;
@@ -122,6 +123,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         btnCuaca.setOnClickListener(this);
         btnTentang.setOnClickListener(this);
 
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         initial();
         dexterPermissionLocMulti();
@@ -155,6 +157,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         getTokenId();
         getTopics();
         firebaseFirestore = FirebaseFirestore.getInstance();
+
+        removeNavigationShiftMode(bottomNavigationView);
 
     }
 
@@ -332,5 +336,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 dialogInterface.dismiss();
             }
         }).create().show();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
     }
 }
