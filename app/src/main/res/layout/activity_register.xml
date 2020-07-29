@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Activity.LoginActivity.RegisterActivity">
+    tools:context=".ui.activity.auth.RegisterActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/_9sdp"
         android:orientation="vertical">
 
         <TextView
@@ -21,6 +21,30 @@
             android:textSize="@dimen/_20sdp" />
 
         <EditText
+            android:id="@+id/txtNama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_7sdp"
+            android:hint="Nama"
+            android:paddingLeft="@dimen/_8sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:textSize="@dimen/_11sdp" />
+
+
+        <EditText
+            android:id="@+id/txtPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_7sdp"
+            android:hint="Nomor Handphone"
+            android:paddingLeft="@dimen/_8sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:textSize="@dimen/_11sdp" />
+
+
+        <EditText
             android:id="@+id/txtUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +52,8 @@
             android:hint="Username"
             android:paddingLeft="@dimen/_8sdp"
             android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp" />
+            android:paddingBottom="@dimen/_10sdp"
+            android:textSize="@dimen/_11sdp" />
 
 
         <EditText
@@ -39,7 +64,8 @@
             android:hint="Email"
             android:paddingLeft="@dimen/_8sdp"
             android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp" />
+            android:paddingBottom="@dimen/_10sdp"
+            android:textSize="@dimen/_11sdp" />
 
 
         <EditText
@@ -50,17 +76,55 @@
             android:hint="Password"
             android:paddingLeft="@dimen/_8sdp"
             android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp" />
+            android:paddingBottom="@dimen/_10sdp"
+            android:textSize="@dimen/_11sdp" />
 
-        <Button
-            android:id="@+id/btnDaftar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/btn_custom"
-            android:backgroundTint="#32A6E0"
-            android:text="Daftar"
-            android:textColor="@color/text_color_white" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/rbGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Laki - laki"
+                    android:textColor="@color/text_color_grey"
+                    android:textSize="@dimen/_11sdp" />
+
+                <RadioButton
+                    android:id="@+id/rbFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_7sdp"
+                    android:text="Perempuan"
+                    android:textColor="@color/text_color_grey"
+                    android:textSize="@dimen/_11sdp" />
+
+            </RadioGroup>
+        </LinearLayout>
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnDaftar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/btn_custom"
+        android:backgroundTint="#32A6E0"
+        android:text="Daftar"
+        android:textColor="@color/text_color_white" />
 
 </RelativeLayout>

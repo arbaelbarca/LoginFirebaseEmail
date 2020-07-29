@@ -3,7 +3,57 @@ package com.arbaelbarca.loginfirebaseemail.model;
 import java.io.Serializable;
 
 public class ModelUser implements Serializable {
-    String id, email, username, imageUrl, nomornip, token_id, alamat, pass;
+    private String id, email, username, nama, imageUrl, phone, token_id, gender, alamat, pass, status;
+    private String saldoku, nosaldoku;
+
+
+    public String getNosaldoku() {
+        return nosaldoku;
+    }
+
+    public void setNosaldoku(String nosaldoku) {
+        this.nosaldoku = nosaldoku;
+    }
+
+    public String getSaldoku() {
+        return saldoku;
+    }
+
+    public void setSaldoku(String saldoku) {
+        this.saldoku = saldoku;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     public String getPass() {
         return pass;
@@ -53,13 +103,6 @@ public class ModelUser implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public String getNomornip() {
-        return nomornip;
-    }
-
-    public void setNomornip(String nomornip) {
-        this.nomornip = nomornip;
-    }
 
     public String getToken_id() {
         return token_id;

@@ -1,8 +1,7 @@
-package com.arbaelbarca.loginfirebaseemail.ui.Activity;
+package com.arbaelbarca.loginfirebaseemail.ui.activity.auth;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -15,10 +14,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.arbaelbarca.loginfirebaseemail.R;
+import com.arbaelbarca.loginfirebaseemail.basedata.BaseActivity;
 import com.arbaelbarca.loginfirebaseemail.model.ModelUser;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChangePassword extends AppCompatActivity implements View.OnClickListener {
+public class ChangePassword extends BaseActivity implements View.OnClickListener {
 
     String getEmail, getPass;
     FirebaseUser user;
@@ -62,6 +59,12 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
         user = FirebaseAuth.getInstance().getCurrentUser();
         modelUser = (ModelUser) getIntent().getSerializableExtra("data");
         btnKirimSandi.setOnClickListener(this);
+
+        iniToolbar();
+    }
+
+    private void iniToolbar() {
+        setToolbar(toolbar, "Ubah Password");
     }
 
     private void changePassword(final String sandiBaru) {
@@ -69,55 +72,37 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
         dialog.show();
         credential = EmailAuthProvider.getCredential(modelUser.getEmail(), modelUser.getPass());
         user.reauthenticate(credential)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            user.updatePassword(sandiBaru)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        user.updatePassword(sandiBaru)
+                                .addOnCompleteListener(task1 -> {
 
-                                            if (!task.isSuccessful()) {
-                                                Toast.makeText(getApplicationContext(), "Terjadi kesalahan, silahkan coba lagi", Toast.LENGTH_LONG).show();
-                                                dialog.dismiss();
-                                            } else {
-                                                Toast.makeText(getApplicationContext(), "Success ganti password baru", Toast.LENGTH_LONG).show();
-                                                dialog.dismiss();
-                                                pushPassBaru(sandiBaru);
-                                                finish();
-                                            }
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("responFailureSandi", "s " + e.getMessage());
-                                    alerDialog("Password baru minimal 6 character");
-                                    dialog.dismiss();
-                                }
-                            });
-                        }
+                                    if (!task1.isSuccessful()) {
+                                        Toast.makeText(getApplicationContext(), "Terjadi kesalahan, silahkan coba lagi", Toast.LENGTH_LONG).show();
+                                        dialog.dismiss();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Success ganti password baru", Toast.LENGTH_LONG).show();
+                                        dialog.dismiss();
+                                        pushPassBaru(sandiBaru);
+                                        finish();
+                                    }
+                                }).addOnFailureListener(e -> {
+                            Log.d("responFailureSandi", "s " + e.getMessage());
+                            alerDialog("Password baru minimal 6 character");
+                            dialog.dismiss();
+                        });
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                dialog.dismiss();
-                Log.d("responFailurePass", "s " + e.getMessage());
-                alerDialog("Mohon maaf password yang lama tidak sesuai");
-            }
+                }).addOnFailureListener(e -> {
+            dialog.dismiss();
+            Log.d("responFailurePass", "s " + e.getMessage());
+            alerDialog("Mohon maaf password yang lama tidak sesuai");
         });
     }
 
     void alerDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(ChangePassword.this);
         builder.setMessage(message);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-
-            }
-        }).create().show();
+        builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss()).create().show();
     }
 
     void pushPassBaru(final String sandiBaru) {

@@ -4,12 +4,14 @@
     <color name="colorPrimaryDark">#455A64</color>
     <color name="colorAccent">#016DA8</color>
 
-    <color name="text_color_black">#323232</color>
+    <color name="text_color_black">#2C2B2B</color>
     <color name="black_pekat">#000000</color>
     <color name="text_color_white">#FFFFFF</color>
 
+    <color name="text_color_grey_light">#F3F1F1</color>
+
     <color name="text_color_grey">#999999</color>
-    <color name="text_color_green">#006766</color>
+    <color name="text_color_green">#004D40</color>
     <color name="red_actionbar_normal">#f02a21</color>
 
     <!-- This Home -->

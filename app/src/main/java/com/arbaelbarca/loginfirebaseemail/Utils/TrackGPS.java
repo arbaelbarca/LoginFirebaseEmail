@@ -3,7 +3,6 @@ package com.arbaelbarca.loginfirebaseemail.Utils;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -45,7 +44,7 @@ public class TrackGPS extends Service implements LocationListener {
         getLocation();
     }
 
-    private Location getLocation() {
+    private void getLocation() {
 
         try {
             locationManager = (LocationManager) mContext
@@ -107,7 +106,7 @@ public class TrackGPS extends Service implements LocationListener {
                                 longitude = loc.getLongitude();
                             }
                         }
-                    } catch (SecurityException e) {
+                    } catch (SecurityException ignored) {
 
                     }
                 }
@@ -117,7 +116,6 @@ public class TrackGPS extends Service implements LocationListener {
             e.printStackTrace();
         }
 
-        return loc;
     }
 
     public double getLongitude() {
@@ -147,19 +145,13 @@ public class TrackGPS extends Service implements LocationListener {
         alertDialog.setMessage("Do you wants to turn On GPS");
 
 
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                mContext.startActivity(intent);
-            }
+        alertDialog.setPositiveButton("Yes", (dialog, which) -> {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            mContext.startActivity(intent);
         });
 
 
-        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        alertDialog.setNegativeButton("No", (dialog, which) -> dialog.cancel());
 
 
         alertDialog.show();

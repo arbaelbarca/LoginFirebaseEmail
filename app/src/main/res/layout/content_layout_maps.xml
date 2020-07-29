@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlBottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_detail_order_layanan">
+
+    <fragment
+        android:id="@+id/mapFragment"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/llLocation"
+        android:layout_gravity="center" />
+
+
+    <LinearLayout
+        android:id="@+id/llLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/text_color_white"
+        android:orientation="vertical"
+        android:padding="@dimen/_2sdp">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgMaps1"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_gravity="center|start"
+                android:src="@drawable/ic_point_map" />
+
+            <ImageView
+                android:id="@+id/imgLineMaps"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_below="@id/imgMaps1"
+                android:layout_gravity="center|start"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:src="@drawable/linecut_maps" />
+
+            <ImageView
+                android:id="@+id/imgMaps2"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_below="@id/imgLineMaps"
+                android:layout_gravity="center|start"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:src="@drawable/marker_baru" />
+
+            <LinearLayout
+                android:id="@+id/llMaps1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/imgMaps1"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:text="Lokasi Toko"
+                        android:textColor="@color/black_pekat"
+                        android:textSize="@dimen/_8sdp" />
+
+                    <TextView
+                        android:id="@+id/txtLokasiOrderToko"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:textColor="@color/text_color_black"
+                        android:textSize="@dimen/_10sdp"
+                        tools:text="Alamat Toko" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llMaps1"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_toEndOf="@id/imgMaps2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:text="Lokasi Pemesan"
+                        android:textColor="@color/black_pekat"
+                        android:textSize="@dimen/_8sdp" />
+
+                    <TextView
+                        android:id="@+id/txtLokasiOrderUser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:textColor="@color/text_color_black"
+                        android:textSize="@dimen/_10sdp"
+                        tools:text="Lokasi Jemput" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llLocation"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/bg_rounded_circle_white"
+        android:padding="@dimen/_8sdp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_refresh_black_24dp" />
+
+</RelativeLayout>

@@ -1,0 +1,222 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameBottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rounded_up"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="@dimen/_130sdp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    tools:context="com.arbaelbarca.loginfirebaseemail.ui.fragment.BSDDetailLayananFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_15sdp"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_15sdp">
+
+        <TextView
+            android:id="@+id/txtTitleTukang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:text="Detail Tukang"
+            android:textColor="@color/black_pekat"
+            android:textSize="@dimen/_13sdp">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgTukang"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_55sdp"
+                android:src="@drawable/ic_user_no_photo" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtNamaTukang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_pekat"
+                    android:textSize="@dimen/_12sdp"
+                    tools:text="Arbalebarcal" />
+
+                <TextView
+                    android:id="@+id/txtPlatTukang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:textColor="@color/black_pekat"
+                    android:textSize="@dimen/_10sdp"
+                    tools:text="3198 KSW" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgTelp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_gravity="right|center"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_call_black_24dp" />
+
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edAddNoteds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:background="@drawable/bg_grey"
+            android:enabled="false"
+            android:padding="@dimen/_10sdp"
+            android:text="Catatan kamu"
+            android:textSize="@dimen/_10sdp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtTitleOrder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Title Pemesan"
+                android:textColor="@color/text_color_black"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/txtViewDetailPesanan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableEnd="@drawable/ic_keyboard_arrow_right_black_24dp"
+                android:text="Lihat Detail Pesanan"
+                android:textColor="#01579B"
+                android:textSize="@dimen/_11sdp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ongkir"
+                android:textColor="@color/black_pekat"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/txtTotalOngkir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3000"
+                android:textColor="@color/text_color_black"
+                android:textSize="@dimen/_11sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Pembayaran"
+                android:textColor="@color/black_pekat"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/txtTotalPembayaran"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3000"
+                android:textColor="@color/text_color_black"
+                android:textSize="@dimen/_11sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Bayar dengan "
+                android:textColor="@color/black_pekat"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/txtPayment"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_red_rounded"
+                android:gravity="center"
+                android:padding="@dimen/_7sdp"
+                android:textColor="@color/text_color_white"
+                android:textSize="@dimen/_10sdp"
+                android:textStyle="bold"
+                tools:text="My Dana" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/txtCancelOrder"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1"
+                android:text="Cancel" />
+
+            <Button
+                android:id="@+id/txtTerimaOrder"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1"
+                android:text="Selesai" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

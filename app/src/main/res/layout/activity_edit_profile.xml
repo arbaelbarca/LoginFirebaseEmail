@@ -4,148 +4,202 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <include layout="@layout/layout_toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_save"
+        android:layout_below="@+id/toolbar">
 
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:paddingLeft="16dp"
-            android:paddingTop="16dp"
-            android:paddingRight="16dp"
-            android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:focusable="true"
-                android:orientation="vertical">
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:scrollbars="none">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_avatar"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center"
-                        android:clickable="true"
-                        android:src="@drawable/ic_user_no_photo" />
+                    android:focusable="true"
+                    android:orientation="vertical">
 
                     <RelativeLayout
-                        android:id="@+id/circleUpload"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_marginLeft="70dp"
-                        android:layout_marginTop="65dp"
-                        android:background="@drawable/bg_edit_profile"
-                        android:clickable="true"
-                        android:padding="3dp">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:padding="5dp"
-                            app:srcCompat="@drawable/edit_profile_write" />
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_avatar"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:clickable="true"
+                            android:src="@drawable/ic_user_no_photo" />
+
+                        <RelativeLayout
+                            android:id="@+id/circleUpload"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="70dp"
+                            android:layout_marginTop="65dp"
+                            android:background="@drawable/bg_edit_profile"
+                            android:clickable="true"
+                            android:padding="3dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="5dp"
+                                app:srcCompat="@drawable/edit_profile_write" />
+
+                        </RelativeLayout>
+
 
                     </RelativeLayout>
 
 
-                </RelativeLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Nama"
+                        android:textSize="16sp" />
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Nama"
-                    android:textSize="16sp" />
+                    <EditText
+                        android:id="@+id/et_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:layout_weight="9"
+                        android:hint="Nama profile"
+                        android:inputType="textCapSentences"
+                        android:textColor="@color/black_pekat"
+                        android:textSize="16sp" />
 
 
-                <EditText
-                    android:id="@+id/et_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="9"
-                    android:hint="Nama profile"
-                    android:inputType="textCapSentences"
-                    android:textColor="@color/black_pekat"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="No Telpn "
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/et_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:layout_weight="9"
+                        android:hint="097883329"
+                        android:inputType="number"
+                        android:longClickable="false"
+                        android:textColor="@color/black_pekat"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Jenis Kelamin"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+                        <RadioGroup
+                            android:id="@+id/rbGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rbMale"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Laki - laki"
+                                android:textColor="@color/text_color_grey"
+                                android:textSize="@dimen/_11sdp" />
+
+                            <RadioButton
+                                android:id="@+id/rbFemale"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_7sdp"
+                                android:text="Perempuan"
+                                android:textColor="@color/text_color_grey"
+                                android:textSize="@dimen/_11sdp" />
+
+                        </RadioGroup>
+                    </LinearLayout>
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="No Telpn "
-                    android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Email "
+                        android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/et_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="9"
-                    android:hint="097883329"
-                    android:inputType="number"
-                    android:longClickable="false"
-                    android:textColor="@color/black_pekat"
-                    android:textSize="16sp" />
+                    <EditText
+                        android:id="@+id/et_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:layout_weight="9"
+                        android:hint="Email"
+                        android:inputType="text"
+                        android:longClickable="false"
+                        android:textColor="@color/black_pekat"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Email "
-                    android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Alamat"
+                        android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/et_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="9"
-                    android:hint="Email"
-                    android:inputType="text"
-                    android:longClickable="false"
-                    android:textColor="@color/black_pekat"
-                    android:textSize="16sp" />
+                    <EditText
+                        android:id="@+id/et_alamat"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:layout_weight="9"
+                        android:gravity="start"
+                        android:hint="Alamat"
+                        android:inputType="text"
+                        android:longClickable="false"
+                        android:textColor="@color/black_pekat"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Alamat"
-                    android:textSize="16sp" />
+                </LinearLayout>
 
-                <EditText
-                    android:id="@+id/et_alamat"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="9"
-                    android:gravity="start"
-                    android:hint="Alamat"
-                    android:inputType="text"
-                    android:longClickable="false"
-                    android:textColor="@color/black_pekat"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-        </ScrollView>
+            </ScrollView>
 
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
 
     <RelativeLayout
         android:id="@+id/ll_save"

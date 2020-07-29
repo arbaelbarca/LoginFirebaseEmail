@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlVerify"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -10,42 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_60sdp"
-                android:src="@drawable/bg_header" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imgCuacaHome"
-                    android:layout_width="@dimen/_22sdp"
-                    android:layout_height="@dimen/_22sdp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/_10sdp" />
-
-                <TextView
-                    android:id="@+id/txtCuacaHome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:text=""
-                    android:textColor="@color/black_pekat"
-                    android:textSize="@dimen/_15sdp" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
     <View
@@ -55,73 +20,17 @@
         android:layout_below="@+id/toolbar"
         android:background="#D5D4D4" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="7dp"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="250dp" />
-
-        <Button
-            android:id="@+id/btnWisata"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_custom"
-            android:text="Objek Wisata Malam"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btnBudaya"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_custom"
-            android:text="Objek Wisata Malam"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btnCuaca"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_custom"
-            android:text="Cuaca"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btnEvent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_custom"
-            android:text="Event"
-            android:textColor="@android:color/white" />
-
-
-        <Button
-            android:id="@+id/btnTentang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_custom"
-            android:text="Tentang"
-            android:textColor="@android:color/white" />
-
-    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/navigation"
-        android:layout_below="@+id/viewHome">
+        android:layout_below="@+id/viewHome"
+        android:visibility="visible">
 
     </FrameLayout>
+
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

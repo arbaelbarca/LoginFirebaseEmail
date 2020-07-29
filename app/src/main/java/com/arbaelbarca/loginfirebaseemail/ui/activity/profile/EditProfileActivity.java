@@ -1,8 +1,7 @@
-package com.arbaelbarca.loginfirebaseemail.ui.Activity;
+package com.arbaelbarca.loginfirebaseemail.ui.activity.profile;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,19 +10,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arbaelbarca.loginfirebaseemail.R;
+import com.arbaelbarca.loginfirebaseemail.basedata.BaseActivity;
 import com.arbaelbarca.loginfirebaseemail.model.ModelUser;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,7 +50,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 
-public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditProfileActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.iv_avatar)
     CircleImageView ivAvatar;
@@ -81,7 +82,15 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     InputStream imageStream;
     String stringPath;
     File file;
-
+    @BindView(R.id.rbMale)
+    RadioButton rbMale;
+    @BindView(R.id.rbFemale)
+    RadioButton rbFemale;
+    @BindView(R.id.rbGroup)
+    RadioGroup rbGroup;
+    RadioButton rbGroupButton;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +98,12 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_edit_profile);
         ButterKnife.bind(this);
 
+        initToolbar();
         initial();
+    }
+
+    private void initToolbar() {
+        setToolbar(toolbar, "Edit Profile");
     }
 
     private void initial() {
@@ -107,24 +121,29 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
         etName.setText(modelUser.getUsername());
         etEmail.setText(modelUser.getEmail());
-        etPhone.setText(modelUser.getNomornip());
+        etPhone.setText(modelUser.getPhone());
         etAlamat.setText(modelUser.getAlamat());
 
-        llSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String txtName = etName.getText().toString();
-                String txtPhone = etPhone.getText().toString();
-                String txtAlamat = etAlamat.getText().toString();
-                String txtEmail = etEmail.getText().toString();
+        if (modelUser.getGender().equals("Laki - laki")) {
+            rbMale.setChecked(true);
+        } else {
+            rbFemale.setChecked(false);
+        }
 
-                if (txtName.isEmpty() || txtPhone.isEmpty() || txtAlamat.isEmpty() || txtEmail.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Data tidak boleh kosong", Toast.LENGTH_LONG).show();
-                } else {
-                    uploadData(txtName, txtPhone, txtAlamat, txtEmail);
-                }
+        llSave.setOnClickListener(view -> {
+            String txtName = etName.getText().toString();
+            String txtPhone = etPhone.getText().toString();
+            String txtAlamat = etAlamat.getText().toString();
+            String txtEmail = etEmail.getText().toString();
+            int selectId = rbGroup.getCheckedRadioButtonId();
+            rbGroupButton = findViewById(selectId);
 
+            if (txtName.isEmpty() || txtPhone.isEmpty() || txtAlamat.isEmpty() || txtEmail.isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Data tidak boleh kosong", Toast.LENGTH_LONG).show();
+            } else {
+                uploadData(txtName, txtPhone, txtAlamat, txtEmail, txtName, rbGroupButton.getText().toString());
             }
+
         });
     }
 
@@ -140,14 +159,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         final CharSequence sequence[] = new CharSequence[]{"Camera", "Galery"};
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Pilih Upload");
-        dialog.setItems(sequence, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (sequence[which].toString().equals("Camera")) {
-                    EasyImage.openCamera(EditProfileActivity.this, 0);
-                } else {
-                    EasyImage.openGallery(EditProfileActivity.this, 0);
-                }
+        dialog.setItems(sequence, (dialog1, which) -> {
+            if (sequence[which].toString().equals("Camera")) {
+                EasyImage.openCamera(EditProfileActivity.this, 0);
+            } else {
+                EasyImage.openGallery(EditProfileActivity.this, 0);
             }
         }).create().show();
     }
@@ -181,7 +197,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         return mimeTypeMap.getExtensionFromMimeType(resolver.getType(uri));
     }
 
-    void uploadData(final String name, final String phone, final String alamat, final String email) {
+    void uploadData(final String username, final String phone, final String alamat, final String email,
+                    final String namaFull, String gender) {
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading");
         dialog.show();
@@ -191,53 +208,44 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     + "." + getFileExtention(imageCamera));
 
             task = referenceStore.putFile(imageCamera);
-            task.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
+            task.continueWithTask((Continuation<UploadTask.TaskSnapshot, Task<Uri>>) task -> {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
 
 
-                    }
-
-                    return referenceStore.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        final String mUri = downloadUri.toString();
-
-                        reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-                        HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("imageUrl", mUri);
-                        reference.updateChildren(hashMap);
-                        dialog.dismiss();
-                        finish();
-                    } else {
-                        dialog.dismiss();
-                        Toast.makeText(getApplicationContext(), "Gagal Upload", Toast.LENGTH_LONG).show();
-
-                    }
                 }
 
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                return referenceStore.getDownloadUrl();
+            }).addOnCompleteListener((OnCompleteListener<Uri>) task -> {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    final String mUri = downloadUri.toString();
+
+                    reference = FirebaseDatabase.getInstance().getReference("User_Hos").child(user.getUid());
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("imageUrl", mUri);
+                    reference.updateChildren(hashMap);
+                    dialog.dismiss();
+                    finish();
+                } else {
+                    dialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Gagal Upload", Toast.LENGTH_LONG).show();
 
                 }
-            });
+            }).addOnFailureListener(e -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show());
         } else {
             dialog.show();
             dialog.setCancelable(false);
-            reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+            reference = FirebaseDatabase.getInstance().getReference("User_Hos").child(user.getUid());
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("email", email);
-            hashMap.put("username", name);
-            hashMap.put("nomornip", phone);
+            hashMap.put("username", username);
+            hashMap.put("phone", phone);
             hashMap.put("alamat", alamat);
+            hashMap.put("nama", namaFull);
+            hashMap.put("gender", gender);
+
+
             reference.updateChildren(hashMap);
             reference.addValueEventListener(new ValueEventListener() {
                 @Override

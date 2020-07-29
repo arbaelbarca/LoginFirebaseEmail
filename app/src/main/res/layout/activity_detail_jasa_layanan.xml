@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.arbaelbarca.loginfirebaseemail.ui.activity.menulayanan.AddJasaLayananActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rlOrder">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgAddJasa"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_150sdp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/add_image_jasa" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_10sdp">
+
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="@dimen/_5sdp"
+                    app:cardElevation="@dimen/_3sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Detail Lokasi"
+                            android:textColor="@color/black_pekat"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Ambil Lokasimu Disini .."
+                                android:textColor="@color/black_pekat" />
+
+                            <Button
+                                android:id="@+id/btnGetLokasi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_25sdp"
+                                android:background="@drawable/btn_custom"
+                                android:text="Ambil Lokasi"
+                                android:textColor="@color/text_color_white"
+                                android:textSize="@dimen/_8sdp" />
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:alpha="0.2"
+                            android:background="@android:color/darker_gray" />
+
+
+                        <fragment
+                            android:id="@+id/mapFragment"
+                            class="com.google.android.gms.maps.SupportMapFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_200sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="5dp">
+
+                        </fragment>
+
+                        <TextView
+                            android:id="@+id/txtAlamat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:text="Alamat Toko : Jln. radat selatan aja ga usah kemana mana "
+                            android:textColor="@color/black_pekat" />
+
+                        <TextView
+                            android:id="@+id/txtAlamat2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:text="Alamat Kamu :"
+                            android:textColor="@color/black_pekat" />
+
+                        <EditText
+                            android:id="@+id/edAddNoteds"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:background="@drawable/bg_grey"
+                            android:hint="Tambah Catatan ... "
+                            android:padding="@dimen/_10sdp"
+                            android:textSize="@dimen/_10sdp" />
+
+                    </LinearLayout>
+
+
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:id="@+id/txtDetailJarak"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:layout_marginBottom="@dimen/_7sdp"
+                    android:background="@color/text_color_grey_light"
+                    android:padding="@dimen/_6sdp"
+                    android:text="Lokasi toko dengan lokasi kamu sekitar 10 dengan waktu 30 3mnits"
+                    android:visibility="gone" />
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_4sdp"
+                    app:cardCornerRadius="@dimen/_7sdp"
+                    app:cardElevation="@dimen/_5sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_6sdp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_3sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Pilih Metode Pembayaran"
+                            android:textColor="@color/black_pekat"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <RadioGroup
+                            android:id="@+id/rbGroupPayment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_11sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rbTunai"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Tunai" />
+
+                            <RadioButton
+                                android:id="@+id/rbNonTunai"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Saldoku" />
+
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_4sdp"
+                    app:cardCornerRadius="@dimen/_7sdp"
+                    app:cardElevation="@dimen/_5sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_6sdp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_3sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Detail Pemesan"
+                            android:textColor="@color/black_pekat"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_13sdp"
+                            android:layout_marginTop="@dimen/_13sdp"
+                            android:text="Nama Jasa"
+                            android:textColor="@color/black_pekat"
+                            android:textSize="@dimen/_11sdp" />
+
+                        <TextView
+                            android:id="@+id/txtNamaJasa"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_13sdp"
+                            android:layout_marginTop="@dimen/_7sdp"
+                            android:text="Sol Patu"
+                            android:textSize="@dimen/_11sdp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_13sdp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:text="Harga Jasa"
+                                    android:textColor="@color/black_pekat"
+                                    android:textSize="@dimen/_11sdp" />
+
+                                <TextView
+                                    android:id="@+id/txtHargaJasa"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_7sdp"
+                                    android:text="30.0000"
+                                    android:textSize="@dimen/_11sdp" />
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:text="Kategori"
+                                    android:textColor="@color/black_pekat"
+                                    android:textSize="@dimen/_11sdp" />
+
+                                <TextView
+                                    android:id="@+id/txtKategoriJasa"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_7sdp"
+                                    android:text="Sol sepatu"
+                                    android:textSize="@dimen/_11sdp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_13sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Deskripsi"
+                            android:textColor="@color/black_pekat"
+                            android:textSize="@dimen/_11sdp" />
+
+                        <TextView
+                            android:id="@+id/txtDescJasa"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_13sdp"
+                            android:layout_marginTop="@dimen/_7sdp"
+                            android:text="Sol Patu"
+                            android:textSize="@dimen/_11sdp" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/rlOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/_15sdp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llSaldoku"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:text="Saldoku"
+                android:textColor="@color/black_pekat"
+                android:textSize="@dimen/_13sdp" />
+
+            <TextView
+                android:id="@+id/txtSaldoku"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50.000"
+                android:textColor="@color/black_pekat"
+                android:textSize="@dimen/_11sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llOngkir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:text="Ongkir"
+                android:textColor="@color/black_pekat"
+                android:textSize="@dimen/_13sdp" />
+
+            <TextView
+                android:id="@+id/txtOngkir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50.000"
+                android:textColor="@color/black_pekat"
+                android:textSize="@dimen/_11sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llTotalPemb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:text="Total Pembayaran"
+                android:textColor="@color/black_pekat"
+                android:textSize="@dimen/_13sdp" />
+
+            <TextView
+                android:id="@+id/txtTotalPembayaran"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black_pekat"
+                android:textSize="@dimen/_11sdp" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btnOrder"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:background="@drawable/btn_custom"
+            android:backgroundTint="#32A6E0"
+            android:text="Pesan"
+            android:textColor="@color/text_color_white" />
+    </LinearLayout>
+
+
+</RelativeLayout>

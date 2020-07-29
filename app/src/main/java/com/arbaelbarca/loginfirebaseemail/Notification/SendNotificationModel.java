@@ -1,8 +1,19 @@
 package com.arbaelbarca.loginfirebaseemail.Notification;
 
+import com.arbaelbarca.loginfirebaseemail.model.ModelJasaLayanan;
+
 public class SendNotificationModel {
     private String body, title, action;
-    String data, userid;
+    private String data, userid;
+    private String uuid;
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public SendNotificationModel(String body, String title) {
         this.body = body;

@@ -1,6 +1,5 @@
-package com.arbaelbarca.loginfirebaseemail.ui.Activity;
+package com.arbaelbarca.loginfirebaseemail.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,10 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.arbaelbarca.loginfirebaseemail.Constants;
 import com.arbaelbarca.loginfirebaseemail.MainActivity;
 import com.arbaelbarca.loginfirebaseemail.R;
-import com.arbaelbarca.loginfirebaseemail.ui.Activity.LoginActivity.LoginActivity;
+import com.arbaelbarca.loginfirebaseemail.ui.activity.auth.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

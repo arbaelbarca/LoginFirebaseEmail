@@ -2,21 +2,22 @@ package com.arbaelbarca.loginfirebaseemail;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,18 +25,23 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.arbaelbarca.loginfirebaseemail.Utils.TrackGPS;
 import com.arbaelbarca.loginfirebaseemail.basedata.BaseActivity;
+import com.arbaelbarca.loginfirebaseemail.model.ModelJasaLayanan;
 import com.arbaelbarca.loginfirebaseemail.model.ModelUser;
 import com.arbaelbarca.loginfirebaseemail.reminder.BroadcastNotif;
+import com.arbaelbarca.loginfirebaseemail.ui.activity.menulayanan.DetailOrderLayananActivity;
+import com.arbaelbarca.loginfirebaseemail.ui.fragment.FragmentProfile;
+import com.arbaelbarca.loginfirebaseemail.ui.fragment.HistoryOrderFragment;
+import com.arbaelbarca.loginfirebaseemail.ui.fragment.HomeFragment;
+import com.arbaelbarca.loginfirebaseemail.ui.fragment.ListUserTopupFragment;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,7 +52,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -54,7 +59,7 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,8 +68,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.btnWisata)
-    Button btnWisata;
     @BindView(R.id.navigation)
     BottomNavigationView bottomNavigationView;
     FirebaseFirestore firebaseFirestore;
@@ -82,25 +85,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     TrackGPS gps;
     GoogleMap map;
     Circle mCircle;
-    @BindView(R.id.btnBudaya)
-    Button btnBudaya;
-    @BindView(R.id.btnCuaca)
-    Button btnCuaca;
-    @BindView(R.id.btnEvent)
-    Button btnEvent;
-    @BindView(R.id.btnTentang)
-    Button btnTentang;
-    @BindView(R.id.imgCuacaHome)
-    ImageView imgCuacaHome;
-    @BindView(R.id.txtCuacaHome)
-    TextView txtCuacaHome;
+
     LocationManager locationManager;
     public static boolean GpsStatus;
     BroadcastNotif broadcastNotif;
     String getDateEvent;
     String getTgl;
     String lastDate, dateNow, saveDate;
+    String getUuid;
+    Dialog dialogPopupCheckOrder;
+    ModelJasaLayanan jasaLayanan;
+    long totalTimeCountInMilliseconds;
+    int time = 0;
+    Dialog dialogCheckOrder;
+    @BindView(R.id.rlVerify)
+    RelativeLayout rlVerify;
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,39 +112,126 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         sharedPreferences = getSharedPreferences(Constants.USER_DATA, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        getUuid = getIntent().getStringExtra("uuidUser");
 
         initToolbar();
 
         broadcastNotif = new BroadcastNotif(MainActivity.this);
-
-
-        btnWisata.setOnClickListener(this);
-        btnBudaya.setOnClickListener(this);
-        btnEvent.setOnClickListener(this);
-        btnCuaca.setOnClickListener(this);
-        btnTentang.setOnClickListener(this);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         initial();
         dexterPermissionLocMulti();
         CheckGpsStatus();
 
-
-        if (GpsStatus) {
-
-        } else {
+        if (!GpsStatus) {
             popupGps();
         }
+
+        if (getUuid != null) checkOrder(getUuid);
+
+        setUpNavigation();
     }
 
-    void checkEmailValidation() {
-        if (user.isEmailVerified()) {
-            showToast("Email sudah verify");
-        } else {
-            showToast("Email belum verify");
-        }
+    private void setUpNavigation() {
+//        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.nav_host_fragment);
+//        if (navHostFragment != null) {
+//            NavigationUI.setupWithNavController(bottomNavigationView,
+//                    navHostFragment.getNavController());
+//        }
+
     }
+
+    private void checkOrder(String getUuid) {
+        dialogPopupCheckOrder = new Dialog(this);
+        dialogPopupCheckOrder.setContentView(R.layout.layout_popup_dialog_checkorder);
+        dialogPopupCheckOrder.setCancelable(false);
+        dialogPopupCheckOrder.show();
+
+        Button btnTerima = dialogPopupCheckOrder.findViewById(R.id.btnTerima);
+        ImageView btnCancel = dialogPopupCheckOrder.findViewById(R.id.imgClose);
+        TextView titleOrder = dialogPopupCheckOrder.findViewById(R.id.txtTitle);
+        TextView txtLokasiToko = dialogPopupCheckOrder.findViewById(R.id.textLokasiToko);
+        TextView txtLokasiUser = dialogPopupCheckOrder.findViewById(R.id.txtLokasiUser);
+        TextView txtOngkir = dialogPopupCheckOrder.findViewById(R.id.txtTotalOngkir);
+        TextView txtTotal = dialogPopupCheckOrder.findViewById(R.id.txtTotalPembayaran);
+        ProgressBar progressBarTimer = dialogPopupCheckOrder.findViewById(R.id.progressbar1_timerview);
+        TextView txtTimer = dialogPopupCheckOrder.findViewById(R.id.txtTimerOrder);
+
+        dialogLoading().show();
+        firebaseFirestore.collection("Detail_Order")
+                .document(getUuid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    jasaLayanan = documentSnapshot.toObject(ModelJasaLayanan.class);
+                    if (jasaLayanan != null) {
+                        titleOrder.setText(jasaLayanan.getTextNama());
+                        txtLokasiToko.setText(jasaLayanan.getTextAlamatToko());
+                        txtLokasiUser.setText(jasaLayanan.getTextAlamatPemesan());
+                        txtOngkir.setText(jasaLayanan.getTextOngkir());
+                        txtTotal.setText(jasaLayanan.getTextTotalPembayaran());
+                        dialogLoading().dismiss();
+                    }
+
+
+                }).addOnFailureListener(e -> {
+            dialogLoading().dismiss();
+        });
+
+        btnTerima.setOnClickListener(v -> {
+            prosesReceived(getUuid);
+
+        });
+
+        btnCancel.setOnClickListener(v -> {
+            dialogPopupCheckOrder.dismiss();
+        });
+
+        getTimerDialog(txtTimer, dialogPopupCheckOrder, progressBarTimer);
+
+    }
+
+    void getTimerDialog(TextView textView, Dialog dialog, ProgressBar progressBar) {
+        new CountDownTimer(15000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                long seconds = millisUntilFinished / 1000;
+                progressBar.setProgress((int) seconds);
+                textView.setText(String.valueOf(millisUntilFinished / 1000));
+            }
+
+            public void onFinish() {
+                dialog.dismiss();
+                progressBar.setVisibility(View.GONE);
+            }
+        }.start();
+    }
+
+
+    private void prosesReceived(String getUuid) {
+        dialogLoading().show();
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("statusOrder", "Aktif");
+        hashMap.put("getImageTukang", "https://firebasestorage.googleapis.com/v0/b/crudfirebase-b025d.appspot.com/o/imageProfile%2Fbussiness-man.png?alt=media&token=4d900dea-e67f-40d1-b605-3b74968fb811");
+        hashMap.put("getNamaTukang", "Ronal");
+        hashMap.put("getNoTukang", "081283797723");
+        hashMap.put("getPlatTukang", "B 3198 KSW");
+
+
+        firebaseFirestore.collection("Detail_Order")
+                .document(getUuid)
+                .update(hashMap)
+                .addOnSuccessListener(aVoid -> {
+                    dialogLoading().dismiss();
+                    dialogPopupCheckOrder.dismiss();
+                    Intent intent = new Intent(getApplicationContext(), DetailOrderLayananActivity.class);
+                    intent.putExtra("uuid", getUuid);
+                    startActivity(intent);
+                }).addOnFailureListener(e -> {
+            dialogLoading().dismiss();
+        });
+    }
+
 
     private void initToolbar() {
         toolbar = findViewById(R.id.toolbar);
@@ -156,10 +244,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void initial() {
         getTokenId();
         getTopics();
+
+        loadHome(new HomeFragment());
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         removeNavigationShiftMode(bottomNavigationView);
 
+//        showRating();
     }
 
 
@@ -184,56 +275,36 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     public void getTokenId() {
         FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (task.isSuccessful()) {
-                            String tokenNotif = task.getResult().getToken();
-                            Log.d("responToken", " t " + tokenNotif);
-                            firebaseFirestore.collection("event")
-                                    .document("tokennotif")
-                                    .update("token_notif", tokenNotif).
-                                    addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String tokenNotif = task.getResult().getToken();
+                        Log.d("responToken", " t " + tokenNotif);
+                        firebaseFirestore.collection("event")
+                                .document("tokennotif")
+                                .update("token_notif", tokenNotif).
+                                addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful()) {
 //                                                Toast.makeText(getApplicationContext(), "Success dapat token", Toast.LENGTH_LONG).show();
 
-                                            }
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("responMEsssage", "m " + e.getMessage());
-                                    e.printStackTrace();
-                                }
-                            });
-                        }
+                                    }
+                                }).addOnFailureListener(e -> {
+                            Log.d("responMEsssage", "m " + e.getMessage());
+                            e.printStackTrace();
+                        });
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-            }
-        });
+                }).addOnFailureListener(e -> e.printStackTrace());
 
 
     }
 
     void getTopics() {
         FirebaseMessaging.getInstance().subscribeToTopic("event")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
 //                            Toast.makeText(getApplicationContext(), "succces", Toast.LENGTH_LONG).show();
-                        }
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+                }).addOnFailureListener(e -> {
 
-            }
         });
     }
 
@@ -247,7 +318,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected void onResume() {
         super.onResume();
         getTopics();
-        checkEmailValidation();
+        getDataProfile();
+        checkVerify();
+        checkRound();
+    }
+
+    private void checkVerify() {
+        Snackbar snackbar = Snackbar
+                .make(rlVerify, "Akun anda belum verifikasi, silahkan verifikasi terlebih dahulu", Snackbar.LENGTH_LONG)
+                .setAction("Kirim", v -> {
+                    user.sendEmailVerification();
+                });
+
+        if (!user.isEmailVerified()) {
+            snackbar.show();
+            snackbar.setDuration(5000);
+        }
+
+    }
+
+    private void checkRound() {
+        double data2 = 1.8;
+        double data3 = 2.1;
+
+        Log.d("responData", "t " + Math.ceil(data2));
+        Log.d("responData", "v " + Math.ceil(data3));
 
     }
 
@@ -266,11 +361,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
 
     private void getDataProfile() {
-        FirebaseDatabase.getInstance().getReference("Users").child(user.getUid())
+        FirebaseDatabase.getInstance()
+                .getReference("User_Hos").child(user.getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         modelUser = dataSnapshot.getValue(ModelUser.class);
+                        if (modelUser != null) {
+                            if (modelUser.getStatus().equalsIgnoreCase("admin")) {
+                                bottomNavigationView.getMenu().findItem(R.id.ic_user_topup).setVisible(true);
+                            } else {
+                                bottomNavigationView.getMenu().findItem(R.id.ic_user_topup).setVisible(false);
+
+                            }
+                        }
+
 
                     }
 
@@ -325,21 +430,35 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         builder.setCancelable(false);
         builder.setTitle("Oooppss...");
         builder.setMessage("Gps anda belum aktif, aktifkan terlebih dahulu");
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-            }
-        }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        }).create().show();
+        builder.setPositiveButton("Ok", (dialogInterface, i) -> startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))).setNegativeButton("Tidak", (dialogInterface, i) -> dialogInterface.dismiss()).create().show();
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
+        Fragment fragment = null;
+        switch (menuItem.getItemId()) {
+            case R.id.ic_wisata:
+                fragment = new HomeFragment();
+                break;
+            case R.id.ic_historyorder:
+                fragment = new HistoryOrderFragment();
+                break;
+            case R.id.ic_event:
+                fragment = new FragmentProfile();
+                break;
+            case R.id.ic_user_topup:
+                fragment = new ListUserTopupFragment();
+                break;
+
+            default:
+        }
+        return loadHome(fragment);
+    }
+
+    void showRating() {
+        dialogCheckOrder = new Dialog(MainActivity.this);
+        dialogCheckOrder.setContentView(R.layout.layout_dialog_ulasan);
+        dialogCheckOrder.setCancelable(false);
+        dialogCheckOrder.show();
     }
 }

@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.arbaelbarca.loginfirebaseemail.ui.activity.menulayanan.DetailFinishOrderActivity">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_7sdp"
+                app:cardCornerRadius="@dimen/_6sdp"
+                app:cardElevation="@dimen/_3sdp">
+
+                <LinearLayout
+                    android:id="@+id/llLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:background="@color/text_color_white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_5sdp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:text="Review Pesanan"
+                        android:textColor="@color/black_pekat" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imgTukang"
+                            android:layout_width="@dimen/_55sdp"
+                            android:layout_height="@dimen/_55sdp"
+                            android:src="@drawable/ic_user_no_photo" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_weight="3"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txtNamaTukang"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black_pekat"
+                                android:textSize="@dimen/_12sdp"
+                                tools:text="Arbalebarcal" />
+
+                            <TextView
+                                android:id="@+id/txtPlatTukang"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:textColor="@color/black_pekat"
+                                android:textSize="@dimen/_10sdp"
+                                tools:text="3198 KSW" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/text_color_white"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_2sdp">
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imgMaps1"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"
+                                android:layout_gravity="center|start"
+                                android:src="@drawable/ic_point_map" />
+
+                            <ImageView
+                                android:id="@+id/imgLineMaps"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_below="@id/imgMaps1"
+                                android:layout_gravity="center|start"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:src="@drawable/linecut_maps" />
+
+                            <ImageView
+                                android:id="@+id/imgMaps2"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_below="@id/imgLineMaps"
+                                android:layout_gravity="center|start"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:src="@drawable/marker_baru" />
+
+                            <LinearLayout
+                                android:id="@+id/llMaps1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/imgMaps1"
+                                android:orientation="horizontal">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_10sdp"
+                                        android:text="Lokasi Toko"
+                                        android:textColor="@color/black_pekat"
+                                        android:textSize="@dimen/_8sdp" />
+
+                                    <TextView
+                                        android:id="@+id/txtLokasiOrderToko"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
+                                        android:textColor="@color/text_color_black"
+                                        android:textSize="@dimen/_10sdp"
+                                        tools:text="Alamat Toko" />
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/llMaps1"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:layout_toEndOf="@id/imgMaps2"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_10sdp"
+                                        android:text="Lokasi Pemesan"
+                                        android:textColor="@color/black_pekat"
+                                        android:textSize="@dimen/_8sdp" />
+
+                                    <TextView
+                                        android:id="@+id/txtLokasiOrderUser"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_10sdp"
+                                        android:layout_marginTop="@dimen/_2sdp"
+                                        android:textColor="@color/text_color_black"
+                                        android:textSize="@dimen/_10sdp"
+                                        tools:text="Lokasi Jemput" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_7sdp"
+                app:cardCornerRadius="@dimen/_6sdp"
+                app:cardElevation="@dimen/_3sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_5sdp">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:text="Detail Ulasan"
+                        android:textColor="@color/black_pekat" />
+
+                    <RatingBar
+                        android:id="@+id/ratingUlasan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:numStars="5"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"
+                        android:stepSize=".5" />
+
+                    <TextView
+                        android:id="@+id/txtGetUlasan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:text="Ulasan mu ada disini yaa"
+                        android:textColor="@color/text_color_black" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_7sdp"
+                app:cardCornerRadius="@dimen/_6sdp"
+                app:cardElevation="@dimen/_3sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_5sdp">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:text="Detail Jasa Pesanan"
+                        android:textColor="@color/black_pekat" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:gravity="center">
+
+                        <RelativeLayout
+                            android:id="@+id/rlImage"
+                            android:layout_width="@dimen/_50sdp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/imgHistoriesOrder"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_user_no_photo" />
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_6sdp"
+                            android:layout_toEndOf="@id/rlImage"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/_7sdp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/txtNamaHistoriesJasa"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Nama Jasa"
+                                    android:textColor="@color/black_pekat"
+                                    android:textSize="@dimen/_12sdp" />
+
+
+                                <TextView
+                                    android:id="@+id/txtHargaHistoriesJasa"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    android:text="Harga Jasa"
+                                    android:textSize="@dimen/_10sdp" />
+
+                                <TextView
+                                    android:id="@+id/txtKatHistoriesJasa"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_4sdp"
+                                    android:text="Kategori Jasa"
+                                    android:textSize="@dimen/_10sdp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/txtStatusHistoriesJasa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="top"
+                                android:gravity="center"
+                                android:text="Selesai"
+                                android:textColor="@color/red_actionbar_normal"
+                                android:textSize="@dimen/_11sdp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_7sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Ongkir"
+                            android:textColor="@color/black_pekat"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <TextView
+                            android:id="@+id/txtTotalOngkir"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3000"
+                            android:textColor="@color/text_color_black"
+                            android:textSize="@dimen/_11sdp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_7sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Total Pembayaran"
+                            android:textColor="@color/black_pekat"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <TextView
+                            android:id="@+id/txtTotalPembayaran"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3000"
+                            android:textColor="@color/text_color_black"
+                            android:textSize="@dimen/_11sdp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_7sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Bayar dengan "
+                            android:textColor="@color/black_pekat"
+                            android:textSize="@dimen/_12sdp" />
+
+                        <TextView
+                            android:id="@+id/txtPayment"
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_red_rounded"
+                            android:gravity="center"
+                            android:padding="@dimen/_7sdp"
+                            android:textColor="@color/text_color_white"
+                            android:textSize="@dimen/_10sdp"
+                            android:textStyle="bold"
+                            tools:text="My Dana" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

@@ -7,7 +7,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.arbaelbarca.loginfirebaseemail.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import java.util.Objects;
 
 public class BaseActivity extends AppCompatActivity {
     Dialog dialogLoad;
@@ -29,8 +36,13 @@ public class BaseActivity extends AppCompatActivity {
 
     public void setToolbar(Toolbar toolbar, String title) {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(title);
+
+        if (toolbar.getNavigationIcon() != null)
+            toolbar.setNavigationOnClickListener(v -> {
+                finish();
+            });
     }
 
     public AlertDialog loading() {
@@ -40,11 +52,28 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-//    public Dialog dialogLoading() {
-//        dialogLoad.setContentView(R.layout.layout_progress_bar);
-//        dialogLoad.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//        dialogLoad.setCancelable(false);
-//        return dialogLoad;
-//    }
+    public Dialog dialogLoading() {
+        dialogLoad.setContentView(R.layout.layout_progressbar_dialog);
+        dialogLoad.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialogLoad.setCancelable(false);
+        return dialogLoad;
+    }
 
+    public void showGlideUser(String url, ImageView imageView) {
+        Glide.with(BaseActivity.this)
+                .load(url)
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_user_no_photo)
+                        .error(R.drawable.ic_user_no_photo))
+                .into(imageView);
+
+    }
+
+    public void showGlideDefault(String url, ImageView imageView) {
+        Glide.with(BaseActivity.this)
+                .load(url)
+                .apply(RequestOptions.placeholderOf(R.drawable.no_image)
+                        .error(R.drawable.no_image))
+                .into(imageView);
+
+    }
 }

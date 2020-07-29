@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_10sdp"
+    android:background="@drawable/bg_item_white"
+    android:orientation="vertical"
+    android:padding="@dimen/_15sdp">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Pesanan mu sudah selesai nih,\n kasih ulasanmu yuk"
+        android:textColor="@color/black_pekat"
+        android:textSize="@dimen/_13sdp" />
+
+    <RatingBar
+        android:id="@+id/ratingUlasan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:numStars="5"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:stepSize=".5" />
+
+    <EditText
+        android:id="@+id/edRatingUlasan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/bg_item_white"
+        android:hint="Masukkan Ulasanmu..."
+        android:padding="@dimen/_10sdp"
+        android:textSize="@dimen/_11sdp" />
+
+    <Button
+        android:id="@+id/btnKirimUlasan"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/bg_red"
+        android:text="Kirim"
+        android:textColor="@color/text_color_white" />
+
+</LinearLayout>

@@ -16,11 +16,11 @@ import java.io.IOException;
 
 public class GetDirectionsData extends AsyncTask<Object, String, String> {
 
-    GoogleMap mMap;
-    String url;
-    String googleDirectionsData;
+    private GoogleMap mMap;
+    private String url;
+    private String googleDirectionsData;
     String duration, distance;
-    LatLng latLng;
+    private LatLng latLng;
 
     @Override
     protected String doInBackground(Object... objects) {
