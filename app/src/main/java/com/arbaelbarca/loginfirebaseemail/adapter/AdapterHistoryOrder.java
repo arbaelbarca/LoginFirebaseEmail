@@ -63,7 +63,9 @@ public class AdapterHistoryOrder extends RecyclerView.Adapter<AdapterHistoryOrde
 
         viewHolder.txtStatusHistories.setText(jasaLayanan.getStatusOrder());
 
-        if (jasaLayanan.getStatusOrder().equalsIgnoreCase("Aktif")) {
+        if (jasaLayanan.getStatusOrder().equalsIgnoreCase("Batal")) {
+            viewHolder.txtStatusHistories.setTextColor(ContextCompat.getColor(context, R.color.yellow));
+        } else if (jasaLayanan.getStatusOrder().equalsIgnoreCase("Aktif")) {
             viewHolder.txtStatusHistories.setTextColor(ContextCompat.getColor(context, R.color.red_actionbar_normal));
         } else if (jasaLayanan.getStatusOrder().equalsIgnoreCase("Selesai"))
             viewHolder.txtStatusHistories.setTextColor(ContextCompat.getColor(context, R.color.text_color_green));
@@ -71,7 +73,10 @@ public class AdapterHistoryOrder extends RecyclerView.Adapter<AdapterHistoryOrde
         viewHolder.itemView.setOnClickListener(v -> {
 
 
-            if (jasaLayanan.getStatusOrder().equals("Selesai")) {
+            if (jasaLayanan.getStatusOrder().equalsIgnoreCase("Selesai")) {
+                if (onClickItem != null)
+                    onClickItem.clickItemSelesai(i);
+            } else if (jasaLayanan.getStatusOrder().equalsIgnoreCase("Batal")) {
                 if (onClickItem != null)
                     onClickItem.clickItemSelesai(i);
             } else {
@@ -81,6 +86,8 @@ public class AdapterHistoryOrder extends RecyclerView.Adapter<AdapterHistoryOrde
 
 
         });
+
+        viewHolder.txtNamaHistoryPemesan.setText("Nama Pemesan : " + jasaLayanan.getNamaPemesan());
 
 
     }
@@ -93,7 +100,7 @@ public class AdapterHistoryOrder extends RecyclerView.Adapter<AdapterHistoryOrde
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgHistories;
         TextView txtNamaHistories, txtHargaHistories, txtKatHistories;
-        TextView txtStatusHistories;
+        TextView txtStatusHistories, txtNamaHistoryPemesan;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,6 +110,7 @@ public class AdapterHistoryOrder extends RecyclerView.Adapter<AdapterHistoryOrde
             txtHargaHistories = itemView.findViewById(R.id.txtHargaHistoriesJasa);
             txtKatHistories = itemView.findViewById(R.id.txtKatHistoriesJasa);
             txtStatusHistories = itemView.findViewById(R.id.txtStatusHistoriesJasa);
+            txtNamaHistoryPemesan = itemView.findViewById(R.id.txtHistoryNamaPemesan);
 
         }
     }

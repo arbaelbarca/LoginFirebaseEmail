@@ -1,6 +1,7 @@
 package com.arbaelbarca.loginfirebaseemail.ui.activity.menulayanan;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -85,8 +86,13 @@ public class DetailFinishOrderActivity extends BaseActivity {
             txtLokasiOrderToko.setText(modelJasaLayanan.getTextAlamatToko());
             txtLokasiOrderUser.setText(modelJasaLayanan.getTextAlamatPemesan());
 
-            ratingUlasan.setRating(Float.parseFloat(modelJasaLayanan.getRatingUlasan()));
-            txtGetUlasan.setText(modelJasaLayanan.getTextUlasan());
+            if (modelJasaLayanan.getRatingUlasan() != null) {
+                ratingUlasan.setRating(Float.parseFloat(modelJasaLayanan.getRatingUlasan()));
+                txtGetUlasan.setText(modelJasaLayanan.getTextUlasan());
+            } else {
+                ratingUlasan.setEnabled(false);
+                txtGetUlasan.setText("Belum ada ulasan dari pemesan");
+            }
 
             txtNamaHistoriesJasa.setText(modelJasaLayanan.getTextNama());
             txtHargaHistoriesJasa.setText(modelJasaLayanan.getTextHarga());
@@ -99,6 +105,16 @@ public class DetailFinishOrderActivity extends BaseActivity {
             txtTotalOngkir.setText(modelJasaLayanan.getTextOngkir());
             txtTotalPembayaran.setText(modelJasaLayanan.getTextTotalPembayaran());
             txtPayment.setText(modelJasaLayanan.getPayment());
+
+            if (modelJasaLayanan.getStatusOrder().equalsIgnoreCase("Batal")) {
+                txtStatusHistoriesJasa.setTextColor(ContextCompat.getColor(this, R.color.yellow));
+            } else if (modelJasaLayanan.getStatusOrder().equalsIgnoreCase("Aktif")) {
+                txtStatusHistoriesJasa.setTextColor(ContextCompat.getColor(this, R.color.red_actionbar_normal));
+            } else if (modelJasaLayanan.getStatusOrder().equalsIgnoreCase("Selesai"))
+                txtStatusHistoriesJasa.setTextColor(ContextCompat.getColor(this, R.color.text_color_green));
+
+            txtStatusHistoriesJasa.setText(modelJasaLayanan.getStatusOrder());
+
         }
     }
 }

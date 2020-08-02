@@ -11,13 +11,14 @@
     <application
         android:name=".AppMain"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_new"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_new"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.topup.DetailTopupSaldoActivity"></activity>
+        <activity android:name=".ui.activity.menulayanan.EditJasaLayananActivity" />
+        <activity android:name=".ui.activity.topup.DetailTopupSaldoActivity" />
         <activity android:name=".ui.activity.topup.TopupSaldoActivity" />
         <activity android:name=".ui.activity.menulayanan.DetailFinishOrderActivity" />
         <activity android:name=".ui.activity.menulayanan.DetailOrderLayananActivity" />
@@ -25,7 +26,17 @@
         <activity android:name=".ui.activity.menulayanan.AddJasaLayananActivity" />
         <activity android:name=".ui.activity.auth.ChangePassword" />
         <activity android:name=".ui.activity.profile.EditProfileActivity" />
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="mainActivity" />
+                <action android:name="com.arbaelbarca.MainActivity.LAUNCH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.activity.auth.RegisterActivity" />
         <activity
             android:name=".ui.activity.auth.LoginActivity"
@@ -56,11 +67,12 @@
 
         <service
             android:name=".FcmFirebase.MyFirebaseMessaging"
-            android:exported="false">
+            android:permission="">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <service android:name=".FcmFirebase.FirebaseIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />

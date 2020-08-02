@@ -103,7 +103,7 @@
                             android:layout_margin="5dp"
                             android:ellipsize="end"
                             android:maxLines="2"
-                            android:text="Alamat Toko : Jln. radat selatan aja ga usah kemana mana "
+                            android:text="Alamat Toko : Jl. Aster Raya Blok CS13 No.1, RT.011/RW.011, Jatisampurna, Kec. Jatisampurna, Kota Bks, Jawa Barat 17433"
                             android:textColor="@color/black_pekat" />
 
                         <TextView
@@ -113,7 +113,7 @@
                             android:layout_margin="5dp"
                             android:ellipsize="end"
                             android:maxLines="2"
-                            android:text="Alamat Kamu :"
+                            android:text=""
                             android:textColor="@color/black_pekat" />
 
                         <EditText

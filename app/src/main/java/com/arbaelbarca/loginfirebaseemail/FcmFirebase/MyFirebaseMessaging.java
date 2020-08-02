@@ -24,6 +24,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.orhanobut.hawk.Hawk;
 
 import org.json.JSONObject;
 
@@ -69,9 +70,12 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnSuccessListener(instanceIdResult -> Log.d("responToken ", " instance " + instanceIdResult.getToken()));
 
-        intentNotif(remoteMessage);
+        String getAdminHawk = Hawk.get("nameAdmin");
 
-
+        if (getAdminHawk != null)
+            if (getAdminHawk.equalsIgnoreCase("admin")) {
+                intentNotif(remoteMessage);
+            }
     }
 
     private void intentNotif(RemoteMessage remoteMessage) {

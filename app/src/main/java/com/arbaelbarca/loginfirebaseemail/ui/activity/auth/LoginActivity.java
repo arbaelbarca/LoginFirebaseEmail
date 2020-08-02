@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.HashMap;
 
@@ -112,7 +113,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     // Log and toast
                     progressDialog.dismiss();
-                    reference = FirebaseDatabase.getInstance().getReference("User_Hos").child(user.getUid()).child("Notification");
+                    reference = FirebaseDatabase.getInstance().getReference("User_Hos")
+                            .child(user.getUid()).child("Notification");
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("token_id", token);
                     reference.updateChildren(hashMap).addOnCompleteListener(task1 -> {

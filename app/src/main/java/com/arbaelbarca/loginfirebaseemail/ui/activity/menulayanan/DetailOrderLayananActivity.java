@@ -1,10 +1,13 @@
 package com.arbaelbarca.loginfirebaseemail.ui.activity.menulayanan;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -91,6 +94,8 @@ public class DetailOrderLayananActivity extends BaseActivity implements OnMapRea
     TextView txtPayment;
     Dialog dialogCheckOrder;
     String ratingtext;
+    @BindView(R.id.edAddNoteds)
+    EditText edAddNoteds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +173,6 @@ public class DetailOrderLayananActivity extends BaseActivity implements OnMapRea
 
         ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
             ratingtext = String.valueOf(rating);
-            showToast("Set rating" + ratingtext);
         });
 
         btnKirimUlasan.setOnClickListener(v -> {
@@ -196,7 +200,6 @@ public class DetailOrderLayananActivity extends BaseActivity implements OnMapRea
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     modelJasaLayanan = documentSnapshot.toObject(ModelJasaLayanan.class);
-                    Log.d("responJasalayanaOrder", " m " + modelJasaLayanan);
                     if (MainActivity.modelUser.getStatus().equals("admin")) {
                         txtTitleTukang.setText("Profil Pemesan");
 
@@ -209,8 +212,9 @@ public class DetailOrderLayananActivity extends BaseActivity implements OnMapRea
                         txtTotalPembayaran.setText(modelJasaLayanan.getTextTotalPembayaran());
 
                         imgTelp.setOnClickListener(v -> {
-
+                            dialPhoneNumber(modelJasaLayanan.getNoTlpnPemesan());
                         });
+
                     } else {
                         txtTitleTukang.setText("Profil Tukang");
 
@@ -230,8 +234,13 @@ public class DetailOrderLayananActivity extends BaseActivity implements OnMapRea
 
                         }
 
+                        imgTelp.setOnClickListener(v -> {
+                            dialPhoneNumber(modelJasaLayanan.getGetNoTukang());
+                        });
+
                     }
 
+                    edAddNoteds.setText(modelJasaLayanan.getTextTambahan());
 
                     LatLng latLng = new LatLng(modelJasaLayanan.getLatToko(), modelJasaLayanan.getLotToko());
                     map.addMarker(new MarkerOptions().position(latLng).icon(
@@ -256,10 +265,17 @@ public class DetailOrderLayananActivity extends BaseActivity implements OnMapRea
                     getDirection(modelJasaLayanan.getLatPemesan(), modelJasaLayanan.getLotPemesan());
 
                     txtTerimaOrder.setOnClickListener(v -> {
-                        updateOrder();
+                        updateOrder("Selesai");
                     });
 
                     txtCancelOrder.setOnClickListener(v -> {
+                        new AlertDialog.Builder(this)
+                                .setMessage("Apakah anda yakin ingin batalkan pesanan ?")
+                                .setPositiveButton("Ya", (dialog, which) -> {
+                                    updateOrder("Batal");
+                                }).setNegativeButton("Tidak", (dialog, which) -> {
+                            dialog.dismiss();
+                        }).create().show();
 
                     });
 
@@ -271,11 +287,19 @@ public class DetailOrderLayananActivity extends BaseActivity implements OnMapRea
 
     }
 
-    private void updateOrder() {
+    public void dialPhoneNumber(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + phoneNumber));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
+    private void updateOrder(String statusOrder) {
         dialogLoading().show();
         firebaseFirestore.collection(Constants.NAME_COLLECTION_JASA)
                 .document(getUuid)
-                .update("statusOrder", "Selesai")
+                .update("statusOrder", statusOrder)
                 .addOnSuccessListener(aVoid -> {
                     dialogLoading().dismiss();
                     if (!MainActivity.modelUser.getStatus().equals("admin")) {
@@ -295,11 +319,11 @@ public class DetailOrderLayananActivity extends BaseActivity implements OnMapRea
         });
     }
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        unregisterReceiver(receiver);
-//    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(receiver);
+    }
 
     @Override
     protected void onResume() {
@@ -320,6 +344,8 @@ public class DetailOrderLayananActivity extends BaseActivity implements OnMapRea
                     if (getStatus != null) {
                         if (getStatus.equals("Selesai") && getUlasan == null && !MainActivity.modelUser.getStatus().equals("admin")) {
                             dialogCheckOrder.show();
+                        } else if (getStatus.equals("Batal")) {
+                            finish();
                         } else {
                             dialogCheckOrder.dismiss();
                         }

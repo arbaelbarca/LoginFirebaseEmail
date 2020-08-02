@@ -27,6 +27,7 @@ import com.arbaelbarca.loginfirebaseemail.model.ModelJasaLayanan;
 import com.arbaelbarca.loginfirebaseemail.onclick.OnClickItem;
 import com.arbaelbarca.loginfirebaseemail.ui.activity.menulayanan.AddJasaLayananActivity;
 import com.arbaelbarca.loginfirebaseemail.ui.activity.menulayanan.DetailJasaLayananActivity;
+import com.arbaelbarca.loginfirebaseemail.ui.activity.menulayanan.EditJasaLayananActivity;
 import com.arbaelbarca.loginfirebaseemail.ui.activity.topup.TopupSaldoActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -65,10 +66,18 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
         @Override
         public void clickItemAktif(int pos) {
-            ModelJasaLayanan modelJasaLayanan = modelJasaLayananArrayList.get(pos);
-            Intent intent = new Intent(getActivity(), DetailJasaLayananActivity.class);
-            intent.putExtra(Constants.DATA_LAYANAN, modelJasaLayanan);
-            startActivity(intent);
+            if (MainActivity.modelUser.getStatus().equals("admin")) {
+                ModelJasaLayanan modelJasaLayanan = modelJasaLayananArrayList.get(pos);
+                Intent intent = new Intent(getActivity(), EditJasaLayananActivity.class);
+                intent.putExtra(Constants.DATA_LAYANAN, modelJasaLayanan);
+                startActivity(intent);
+            } else {
+                ModelJasaLayanan modelJasaLayanan = modelJasaLayananArrayList.get(pos);
+                Intent intent = new Intent(getActivity(), DetailJasaLayananActivity.class);
+                intent.putExtra(Constants.DATA_LAYANAN, modelJasaLayanan);
+                startActivity(intent);
+            }
+
         }
     };
 

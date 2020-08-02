@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_10sdp"
-    android:elevation="@dimen/_4sdp"
-    app:cardCornerRadius="@dimen/_5sdp">
+    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardElevation="@dimen/_4sdp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,6 +29,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/llHistoryJasa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_6sdp"
@@ -83,6 +84,18 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtHistoryNamaPemesan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/llHistoryJasa"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:text="Nama pemesan : Ronal"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/_11sdp" />
 
     </RelativeLayout>
 

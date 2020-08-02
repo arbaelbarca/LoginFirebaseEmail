@@ -127,6 +127,7 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
 
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationCallback locationCallback;
+    CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,22 +193,29 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
     void popupDialogCheckOrder(ModelJasaLayanan modelJasaLayanan) {
         Dialog dialogOrder = new Dialog(this);
         dialogOrder.setContentView(R.layout.layout_dialog_order);
+        dialogOrder.setCancelable(false);
         dialogOrder.show();
 
-        TextView txtTimer = dialogOrder.findViewById(R.id.txtCountTimer);
-        getTimer(txtTimer, modelJasaLayanan);
+//        TextView txtTimer = dialogOrder.findViewById(R.id.txtCountTimer);
+        getTimer(dialogOrder, modelJasaLayanan);
+
     }
 
-    void getTimer(TextView timer, ModelJasaLayanan modelJasaLayanan) {
-        new CountDownTimer(15000, 1000) {
+    void getTimer(Dialog dialog, ModelJasaLayanan modelJasaLayanan) {
+        countDownTimer = new CountDownTimer(15000, 1000) {
+            @Override
             public void onTick(long millisUntilFinished) {
                 validateAdmin(modelJasaLayanan.getUuid());
             }
 
+            @Override
             public void onFinish() {
-                timer.setText("done!");
+                dialog.dismiss();
+                showToast("anda tidak dapat driver, mohon di order kembali");
+                countDownTimer.cancel();
             }
-        }.start();
+        };
+        countDownTimer.start();
     }
 
 
@@ -245,7 +253,7 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
                     googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
                 });
 
-                String getOrigin = "-6.2658892" + "," + "106.9004475";
+                String getOrigin = Constants.LAT_TOKO_STRING + "," + Constants.LOT_TOKO_STRING;
                 String getDestination = latitude + "," + longitude;
 
                 hitApiDirection(getOrigin, getDestination);
@@ -295,13 +303,13 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
                             llTotalPemb.setVisibility(View.VISIBLE);
 
                         }
-                        showToast("Succes dapet");
+                        showToast("Sukses dapet lokasi anda");
                     }
 
                     @Override
                     public void onFailure(Call<ResponseDirectionMaps> call, Throwable t) {
                         dialogLoading().dismiss();
-                        showToast("gagal brai");
+                        showToast("gagal koneksi");
                     }
                 });
 
@@ -329,10 +337,10 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
-        LatLng latLng = new LatLng(-6.2658892, 106.9004475);
+        LatLng latLng = new LatLng(Constants.LAT_TOKO, Constants.LOT_TOKO);
         map.addMarker(new MarkerOptions().position(latLng).icon(
                 BitmapDescriptorFactory.fromResource(R.drawable.marker_baru)).title("Lokasi Toko")
-                .snippet("Jalan aja dlu ga usah kemana mana"));
+                .snippet(Constants.ALAMAT_TOKO));
 
         map.setMyLocationEnabled(true);
         map.getUiSettings().setZoomGesturesEnabled(true);
@@ -378,7 +386,6 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         ModelUser modelUser = dataSnapshot.getValue(ModelUser.class);
                         if (modelUser != null) {
-                            sendPushAdmin(modelUser.getToken_id(), modelJasaLayanan);
                         }
 
                     }
@@ -390,7 +397,7 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
                 });
     }
 
-    private void sendPushAdmin(String tokeind, ModelJasaLayanan modelJasaLayanan) {
+    private void sendPushAdmin(ModelJasaLayanan modelJasaLayanan) {
         SendNotificationModel sendNotificationModel = new SendNotificationModel("Order masuk", modelJasaLayanan.getTextNama());
 
         RequestNotificaton requestNotificaton = new RequestNotificaton();
@@ -399,7 +406,7 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
         sendNotificationModel.setUuid(modelJasaLayanan.getUuid());
 
         requestNotificaton.setData(sendNotificationModel);
-        requestNotificaton.setToken(tokeind);
+        requestNotificaton.setToken("/topics/event");
         requestNotificaton.setContent_available(true);
 
         Call<ResponsePushNotif> call = ServiceApiClient.getApiNotif().sendChatNotification(requestNotificaton);
@@ -407,7 +414,6 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
             @Override
             public void onResponse(Call<ResponsePushNotif> call, Response<ResponsePushNotif> response) {
                 if (response.isSuccessful()) {
-                    dialogLoading().dismiss();
                     popupDialogCheckOrder(modelJasaLayanan);
 
                 }
@@ -434,9 +440,12 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
                         startActivity(intent);
                         finish();
                         dialogLoading().dismiss();
+                        countDownTimer.onFinish();
                     } else {
                         dialogLoading().dismiss();
                     }
+
+
                 }).addOnFailureListener(e -> {
             dialogLoading().dismiss();
         });
@@ -458,8 +467,8 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
         modelJasaLayanan.setTextTotalPembayaran(txtTotalPembayaran.getText().toString());
         modelJasaLayanan.setTextAlamatToko(txtAlamatToko.getText().toString());
         modelJasaLayanan.setTextAlamatPemesan(txtAlamatUser.getText().toString());
-        modelJasaLayanan.setLatToko(-6.2658892);
-        modelJasaLayanan.setLotToko(106.9004475);
+        modelJasaLayanan.setLatToko(Constants.LAT_TOKO);
+        modelJasaLayanan.setLotToko(Constants.LOT_TOKO);
         modelJasaLayanan.setLatPemesan(latitude);
         modelJasaLayanan.setLotPemesan(longitude);
         modelJasaLayanan.setStatusOrder("");
@@ -468,15 +477,20 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
         modelJasaLayanan.setImagePemesan(MainActivity.modelUser.getImageUrl());
         modelJasaLayanan.setPayment(radioButton.getText().toString());
 
-        int saldoku = Integer.parseInt(MainActivity.modelUser.getSaldoku());
-        String getTotal = txtTotalPembayaran.getText().toString();
-        if (!getTotal.equalsIgnoreCase("")) {
-            int totalPayment = Integer.parseInt(getTotal);
-            paymentSaldo = saldoku - totalPayment;
+        if (rbNonTunai.isChecked()) {
+            showToast("Ke check");
+            int saldoku = Integer.parseInt(MainActivity.modelUser.getSaldoku());
+            String getTotal = txtTotalPembayaran.getText().toString();
+            if (!getTotal.equalsIgnoreCase("")) {
+                int totalPayment = Integer.parseInt(getTotal);
+                paymentSaldo = saldoku - totalPayment;
+            }
+        } else {
+            showToast("Tidak check");
         }
 
 
-        firebaseFirestore.collection("Detail_Order").document(uuid)
+        firebaseFirestore.collection(NAME_COLLECTION_JASA).document(uuid)
                 .set(modelJasaLayanan, SetOptions.merge()).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 reference = FirebaseDatabase.getInstance().getReference("User_Hos")
@@ -486,7 +500,9 @@ public class DetailJasaLayananActivity extends BaseActivity implements OnMapRead
                 reference.updateChildren(hashMap)
                         .addOnCompleteListener(task1 -> {
                             if (task1.isSuccessful()) {
-                                getTokenIdAdmin(modelJasaLayanan);
+//                                getTokenIdAdmin(modelJasaLayanan);
+                                sendPushAdmin(modelJasaLayanan);
+
                             }
                         });
 

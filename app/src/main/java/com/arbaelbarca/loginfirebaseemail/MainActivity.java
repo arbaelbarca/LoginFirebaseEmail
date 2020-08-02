@@ -58,6 +58,7 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.orhanobut.hawk.Hawk;
 
 import java.util.HashMap;
 import java.util.List;
@@ -101,6 +102,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @BindView(R.id.rlVerify)
     RelativeLayout rlVerify;
 
+    CountDownTimer countDownTimer;
+
     @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +130,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             popupGps();
         }
 
-        if (getUuid != null) checkOrder(getUuid);
+        if (getUuid != null)
+            if (MainActivity.modelUser.getStatus().equalsIgnoreCase("admin"))
+                checkOrder(getUuid);
 
         setUpNavigation();
     }
@@ -165,12 +170,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 .addOnSuccessListener(documentSnapshot -> {
                     jasaLayanan = documentSnapshot.toObject(ModelJasaLayanan.class);
                     if (jasaLayanan != null) {
-                        titleOrder.setText(jasaLayanan.getTextNama());
-                        txtLokasiToko.setText(jasaLayanan.getTextAlamatToko());
-                        txtLokasiUser.setText(jasaLayanan.getTextAlamatPemesan());
-                        txtOngkir.setText(jasaLayanan.getTextOngkir());
-                        txtTotal.setText(jasaLayanan.getTextTotalPembayaran());
-                        dialogLoading().dismiss();
+                        if (jasaLayanan.getStatusOrder().equalsIgnoreCase("aktif")) {
+                            showToast("Maaf, Sudah di ambil oleh admin lain");
+                            dialogLoading().dismiss();
+                            dialogPopupCheckOrder.dismiss();
+                        } else {
+                            titleOrder.setText(jasaLayanan.getTextNama());
+                            txtLokasiToko.setText(jasaLayanan.getTextAlamatToko());
+                            txtLokasiUser.setText(jasaLayanan.getTextAlamatPemesan());
+                            txtOngkir.setText(jasaLayanan.getTextOngkir());
+                            txtTotal.setText(jasaLayanan.getTextTotalPembayaran());
+                            dialogLoading().dismiss();
+                        }
+
                     }
 
 
@@ -192,13 +204,37 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     void getTimerDialog(TextView textView, Dialog dialog, ProgressBar progressBar) {
-        new CountDownTimer(15000, 1000) {
+        countDownTimer = new CountDownTimer(15000, 1000) {
+            @Override
             public void onTick(long millisUntilFinished) {
                 long seconds = millisUntilFinished / 1000;
                 progressBar.setProgress((int) seconds);
                 textView.setText(String.valueOf(millisUntilFinished / 1000));
+
+                firebaseFirestore.collection("Detail_Order")
+                        .document(getUuid)
+                        .get()
+                        .addOnSuccessListener(documentSnapshot -> {
+                            jasaLayanan = documentSnapshot.toObject(ModelJasaLayanan.class);
+                            if (jasaLayanan != null) {
+                                if (jasaLayanan.getStatusOrder().equalsIgnoreCase("aktif")) {
+                                    showToast("Maaf, Sudah di ambil oleh admin lain");
+                                    dialogLoading().dismiss();
+                                    dialogPopupCheckOrder.dismiss();
+                                    countDownTimer.onFinish();
+                                } else {
+                                    dialogLoading().dismiss();
+                                }
+
+                            }
+
+
+                        }).addOnFailureListener(e -> {
+                    dialogLoading().dismiss();
+                });
             }
 
+            @Override
             public void onFinish() {
                 dialog.dismiss();
                 progressBar.setVisibility(View.GONE);
@@ -209,7 +245,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void prosesReceived(String getUuid) {
         dialogLoading().show();
-
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("statusOrder", "Aktif");
         hashMap.put("getImageTukang", "https://firebasestorage.googleapis.com/v0/b/crudfirebase-b025d.appspot.com/o/imageProfile%2Fbussiness-man.png?alt=media&token=4d900dea-e67f-40d1-b605-3b74968fb811");
@@ -278,7 +313,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         String tokenNotif = task.getResult().getToken();
-                        Log.d("responToken", " t " + tokenNotif);
                         firebaseFirestore.collection("event")
                                 .document("tokennotif")
                                 .update("token_notif", tokenNotif).
@@ -288,7 +322,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
                                     }
                                 }).addOnFailureListener(e -> {
-                            Log.d("responMEsssage", "m " + e.getMessage());
                             e.printStackTrace();
                         });
                     }
@@ -320,7 +353,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         getTopics();
         getDataProfile();
         checkVerify();
-        checkRound();
     }
 
     private void checkVerify() {
@@ -334,15 +366,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             snackbar.show();
             snackbar.setDuration(5000);
         }
-
-    }
-
-    private void checkRound() {
-        double data2 = 1.8;
-        double data3 = 2.1;
-
-        Log.d("responData", "t " + Math.ceil(data2));
-        Log.d("responData", "v " + Math.ceil(data3));
 
     }
 
@@ -370,6 +393,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                         if (modelUser != null) {
                             if (modelUser.getStatus().equalsIgnoreCase("admin")) {
                                 bottomNavigationView.getMenu().findItem(R.id.ic_user_topup).setVisible(true);
+                                Hawk.put("nameAdmin", modelUser.getStatus());
                             } else {
                                 bottomNavigationView.getMenu().findItem(R.id.ic_user_topup).setVisible(false);
 
