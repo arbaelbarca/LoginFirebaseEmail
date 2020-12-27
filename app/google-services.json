@@ -1,79 +1,42 @@
 {
   "project_info": {
-    "project_number": "404520603262",
-    "firebase_url": "https://crudfirebase-b025d.firebaseio.com",
-    "project_id": "crudfirebase-b025d",
-    "storage_bucket": "crudfirebase-b025d.appspot.com"
+    "project_number": "664437026538",
+    "firebase_url": "https://jadwalngajar-default-rtdb.firebaseio.com",
+    "project_id": "jadwalngajar",
+    "storage_bucket": "jadwalngajar.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:404520603262:android:e28f77566437220628922f",
+        "mobilesdk_app_id": "1:664437026538:android:a321cef7c8ecc3b5f9b193",
         "android_client_info": {
-          "package_name": "com.arbaelbarca.loginfirebaseemail"
+          "package_name": "com.arbaelbarca.jadwalngajar"
         }
       },
       "oauth_client": [
         {
-          "client_id": "404520603262-rq5sbprbtvp2ll02d284mi0rdgubfrpp.apps.googleusercontent.com",
+          "client_id": "664437026538-v7vtsf380hfb2v9vvoi930lmjbpo9tm3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.arbaelbarca.loginfirebaseemail",
+            "package_name": "com.arbaelbarca.jadwalngajar",
             "certificate_hash": "bb0de1cff9ad6af9b670aade6766a83fa771fd08"
           }
         },
         {
-          "client_id": "404520603262-bck9v9mmholiumjlaqmlovduucok8m4n.apps.googleusercontent.com",
+          "client_id": "664437026538-jkfi71d4pos1dsfhkttv3e0lkr0fa4m3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDqUd-Bwh0-ZEB2CrioLVKOeM7PxxTsMZE"
+          "current_key": "AIzaSyBSxbUC8vWeCjEKqP1t9Ev8iID0Ao3mayc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "404520603262-bck9v9mmholiumjlaqmlovduucok8m4n.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:404520603262:android:0f21f70464e6fbd928922f",
-        "android_client_info": {
-          "package_name": "com.arbaelbarca.myviewandviews"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "404520603262-um3bf28ffh76jumk14hr9ogajid5gf02.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.arbaelbarca.myviewandviews",
-            "certificate_hash": "bb0de1cff9ad6af9b670aade6766a83fa771fd08"
-          }
-        },
-        {
-          "client_id": "404520603262-bck9v9mmholiumjlaqmlovduucok8m4n.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDqUd-Bwh0-ZEB2CrioLVKOeM7PxxTsMZE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "404520603262-bck9v9mmholiumjlaqmlovduucok8m4n.apps.googleusercontent.com",
+              "client_id": "664437026538-jkfi71d4pos1dsfhkttv3e0lkr0fa4m3.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

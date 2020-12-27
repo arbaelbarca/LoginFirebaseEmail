@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.arbaelbarca.loginfirebaseemail">
+    package="com.arbaelbarca.jadwalngajar">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.arbaelbarca.loginfirebaseemail.AppMain"
+        android:name="com.arbaelbarca.jadwalngajar.AppMain"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_new"
         android:label="@string/app_name"
@@ -18,14 +18,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="com.arbaelbarca.loginfirebaseemail.ui.Activity.ChangePassword"></activity>
-        <activity android:name="com.arbaelbarca.loginfirebaseemail.ui.Activity.EditProfileActivity" />
-        <activity android:name="com.arbaelbarca.loginfirebaseemail.MainActivity" />
-        <activity android:name="com.arbaelbarca.loginfirebaseemail.ui.Activity.LoginActivity.RegisterActivity" />
+        <activity android:name="com.arbaelbarca.jadwalngajar.ui.Activity.ChangePassword"></activity>
+        <activity android:name="com.arbaelbarca.jadwalngajar.ui.Activity.EditProfileActivity" />
+        <activity android:name="com.arbaelbarca.jadwalngajar.MainActivity" />
+        <activity android:name="com.arbaelbarca.jadwalngajar.ui.Activity.LoginActivity.RegisterActivity" />
         <activity
-            android:name="com.arbaelbarca.loginfirebaseemail.ui.Activity.LoginActivity.LoginActivity"
+            android:name="com.arbaelbarca.jadwalngajar.ui.Activity.LoginActivity.LoginActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name="com.arbaelbarca.loginfirebaseemail.ui.Activity.SplashScreen">
+        <activity android:name="com.arbaelbarca.jadwalngajar.ui.Activity.SplashScreen">
             <intent-filter>
                 <action android:name="home" />
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +35,7 @@
         </activity>
 
         <receiver
-            android:name="com.arbaelbarca.loginfirebaseemail.reminder.BroadcastNotif"
+            android:name="com.arbaelbarca.jadwalngajar.reminder.BroadcastNotif"
             android:enabled="false"
             android:exported="true">
 
@@ -51,13 +51,13 @@
             android:value="@string/key_maps" />
 
         <service
-            android:name="com.arbaelbarca.loginfirebaseemail.FcmFirebase.MyFirebaseMessaging"
+            android:name="com.arbaelbarca.jadwalngajar.FcmFirebase.MyFirebaseMessaging"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.arbaelbarca.loginfirebaseemail.FcmFirebase.FirebaseIdService">
+        <service android:name="com.arbaelbarca.jadwalngajar.FcmFirebase.FirebaseIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
